@@ -1,0 +1,35 @@
+# Date
+$DATE = Get-Date -Format "yyyy-MM-dd"
+
+# Output directory
+$outDir = "C:\Users\parkinco\Box\Project_MetoliusGNSS\VOD\Data\GNSS\compressed\maturepine_tower"
+if (!(Test-Path $outDir)) { 
+    New-Item -ItemType Directory -Path $outDir | Out-Null 
+}
+
+# Temp WinSCP script
+$WINSCP_SCRIPT = Join-Path $env:TEMP "script_winscp.txt"
+
+@"
+open sftp://reach:emlidreach@192.168.42.1
+lcd "$outDir"
+cd /data/logs/
+get *.*
+exit
+"@ | Set-Content $WINSCP_SCRIPT
+
+
+# Set WinSCP path explicitly
+$WinSCP = "C:\Users\parkinco\AppData\Local\Programs\WinSCP\WinSCP.com"
+
+if (!(Test-Path $WinSCP)) {
+    throw "WinSCP.com not found at $WinSCP"
+}
+
+# Execute transfer
+& $WinSCP /script="$WINSCP_SCRIPT"
+
+Write-Host "===== Transfer finalized ====="
+Write-Host "File saved in: $outDir"
+
+Pause
