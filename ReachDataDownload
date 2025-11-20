@@ -1,4 +1,4 @@
-PS C:\Users\parkinco> $outDir = "C:\Users\parkinco\Box\Project_MetoliusGNSS\VOD\Data\GNSS\compressed\maturepine_tower\Direct"
+PS C:\Users\parkinco> $outDir = "C:\Users\parkinco\Box\Project_MetoliusGNSS\VOD\Data\GNSS\compressed\maturepine_tower"
 PS C:\Users\parkinco> if (!(Test-Path $outDir)) {
 >>     New-Item -ItemType Directory -Path $outDir | Out-Null
 >> }
